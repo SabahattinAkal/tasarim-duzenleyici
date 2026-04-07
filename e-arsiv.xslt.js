@@ -390,6 +390,8 @@
 										}
 										makeCode(document.getElementById("qrvalue").innerHTML);
 									</script>
+									<!-- logo -->
+
 									<!-- <br/><br/><br/> -->
 									<!-- <img style="width: 250px;" align="middle" src=""/> -->
 								</td>

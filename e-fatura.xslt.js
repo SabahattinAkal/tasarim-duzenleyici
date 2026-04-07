@@ -363,9 +363,40 @@
 										</span>
 									</h1>
 								</td>
-								<!-- Firma Logo LOGO -->
-								<td width="40%" style="text-align:right; vertical-align:middle">
-									<!-- <img title="FİRMA LOGO" width="235" src=''/> -->
+								<td align="right" valign="middle">
+									<!-- <br/><br/><br/> -->
+									<div id="qrcode"/>
+									<div id="qrvalue" style="visibility: hidden; height: 30px;width: 30px; ; display:none">
+										{"vkntckn":"<xsl:value-of select="n1:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID[@schemeID='TCKN' or @schemeID='VKN']"/>",
+										"avkntckn":"<xsl:value-of select="n1:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PartyIdentification/cbc:ID[@schemeID='TCKN' or @schemeID='VKN']"/>",
+										"senaryo":"<xsl:value-of select="n1:Invoice/cbc:ProfileID"/>",
+										"tip":"<xsl:value-of select="n1:Invoice/cbc:InvoiceTypeCode">	</xsl:value-of>",
+										"tarih":"<xsl:value-of select="n1:Invoice/cbc:IssueDate"/>",
+										"no":"<xsl:value-of select="n1:Invoice/cbc:ID"/>",
+										"ETTN":"<xsl:value-of select="n1:Invoice/cbc:UUID"/>",
+										"parabirimi":"<xsl:value-of select="n1:Invoice/cbc:DocumentCurrencyCode"/>",
+										"malhizmettoplam":"<xsl:value-of select="n1:Invoice/cac:LegalMonetaryTotal/cbc:LineExtensionAmount"/>",
+										<xsl:for-each select="n1:Invoice/cac:TaxTotal/cac:TaxSubtotal[cac:TaxCategory/cac:TaxScheme/cbc:TaxTypeCode='0015']">
+											<xsl:text> , "hesaplanankdv</xsl:text>(<xsl:value-of select="cbc:Percent"/>)":"<xsl:value-of select="cbc:TaxAmount"/>"</xsl:for-each>
+										<xsl:for-each select="n1:Invoice/cac:TaxTotal/cac:TaxSubtotal[cac:TaxCategory/cac:TaxScheme/cbc:TaxTypeCode='0015']">
+											<xsl:text> , "kdvmatrah</xsl:text>(<xsl:value-of select="cbc:Percent"/>)":"<xsl:value-of select="cbc:TaxableAmount"/>",</xsl:for-each>
+										"odenecek":"<xsl:value-of select="n1:Invoice/cac:LegalMonetaryTotal/cbc:PayableAmount"/>",}
+									</div>
+									<script type="text/javascript">
+										var qrcode = new QRCode(document.getElementById("qrcode"), {
+										width : 150,
+										height : 150,
+										correctLevel : QRCode.CorrectLevel.L
+										});
+										function makeCode (msg) {
+										var elText = document.getElementById("text");
+										qrcode.makeCode(msg);
+										}
+										makeCode(document.getElementById("qrvalue").innerHTML);
+									</script>
+									<!-- <br/><br/><br/> -->
+									<!-- logo -->
+									<!-- <img style="width: 250px;" align="middle" src=""/> -->
 								</td>
 							</tr>
 							<tr style="height:118px; " valign="top">

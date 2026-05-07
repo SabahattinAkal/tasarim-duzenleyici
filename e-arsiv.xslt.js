@@ -230,7 +230,7 @@
 															<xsl:value-of select="cac:PartyName/cbc:Name"/>
 															<br/>
 														</xsl:if>
-													<!--<xsl:for-each select="cac:Person">
+													<xsl:for-each select="cac:Person">
 															<xsl:for-each select="cbc:Title">
 																<xsl:apply-templates/>
 																<xsl:text>&#160;</xsl:text>
@@ -250,7 +250,7 @@
 															<xsl:for-each select="cbc:NameSuffix">
 																<xsl:apply-templates/>
 															</xsl:for-each>
-														</xsl:for-each>-->
+														</xsl:for-each>
 													</td>
 												</xsl:for-each>
 											</tr>

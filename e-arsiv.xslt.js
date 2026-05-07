@@ -1829,7 +1829,7 @@
 				<br/>
 			</xsl:if>
 			<xsl:for-each select="cac:Person">
-			<!--<xsl:for-each select="cbc:Title">
+			<xsl:for-each select="cbc:Title">
 					<xsl:apply-templates/>
 					<xsl:text>&#160;</xsl:text>
 				</xsl:for-each>
@@ -1847,7 +1847,7 @@
 				</xsl:for-each>
 				<xsl:for-each select="cbc:NameSuffix">
 					<xsl:apply-templates/>
-				</xsl:for-each>-->
+				</xsl:for-each>
 				<xsl:if test="$PartyType='TAXFREE'">
 					<br/>
 					<xsl:text>Pasaport No: </xsl:text>

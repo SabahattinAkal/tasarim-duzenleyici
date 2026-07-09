@@ -221,35 +221,46 @@
 									<table align="center" border="0" width="100%">
 										<tbody>
 											<tr style="font-weight:bold;">
-												<xsl:for-each select="n1:Invoice/cac:AccountingSupplierParty/cac:Party">
-													<td>
-														<xsl:if test="cac:PartyName">
-															<xsl:value-of select="cac:PartyName/cbc:Name"/>
-															<br/>
-														</xsl:if>
-														<xsl:for-each select="cac:Person">
-															<xsl:for-each select="cbc:Title">
-																<xsl:apply-templates/>
-																<xsl:text>&#160;</xsl:text>
-															</xsl:for-each>
-															<xsl:for-each select="cbc:FirstName">
-																<xsl:apply-templates/>
-																<xsl:text>&#160;</xsl:text>
-															</xsl:for-each>
-															<xsl:for-each select="cbc:MiddleName">
-																<xsl:apply-templates/>
-																<xsl:text>&#160;</xsl:text>
-															</xsl:for-each>
-															<xsl:for-each select="cbc:FamilyName">
-																<xsl:apply-templates/>
-																<xsl:text>&#160;</xsl:text>
-															</xsl:for-each>
-															<xsl:for-each select="cbc:NameSuffix">
-																<xsl:apply-templates/>
-															</xsl:for-each>
-														</xsl:for-each>
-													</td>
-												</xsl:for-each>
+												<xsl:choose>
+
+	<!-- PartyName içinde gerçekten veri varsa bunu yazdır -->
+	<xsl:when test="cac:PartyName/cbc:Name[normalize-space()]">
+		<xsl:value-of select="cac:PartyName/cbc:Name"/>
+		<br/>
+	</xsl:when>
+
+	<!-- PartyName yoksa veya boşsa Person bilgilerini yazdır -->
+	<xsl:otherwise>
+		<xsl:for-each select="cac:Person">
+
+			<xsl:for-each select="cbc:Title">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:FirstName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:MiddleName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:FamilyName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:NameSuffix">
+				<xsl:apply-templates/>
+			</xsl:for-each>
+
+		</xsl:for-each>
+	</xsl:otherwise>
+
+</xsl:choose>
 											</tr>
 											<tr>
 												<xsl:for-each select="n1:Invoice/cac:AccountingSupplierParty/cac:Party">
@@ -1938,45 +1949,65 @@
 	<xsl:template name="Party_Title">
 		<xsl:param name="PartyType"/>
 		<td style="width:469px; ">
-			<xsl:if test="cac:PartyName">
-				<xsl:value-of select="cac:PartyName/cbc:Name"/>
-				<br/>
-			</xsl:if>
-			<xsl:for-each select="cac:Person">
-				<xsl:for-each select="cbc:Title">
-					<xsl:apply-templates/>
-					<xsl:text>&#160;</xsl:text>
-				</xsl:for-each>
-				<xsl:for-each select="cbc:FirstName">
-					<xsl:apply-templates/>
-					<xsl:text>&#160;</xsl:text>
-				</xsl:for-each>
-				<xsl:for-each select="cbc:MiddleName">
-					<xsl:apply-templates/>
-					<xsl:text>&#160; </xsl:text>
-				</xsl:for-each>
-				<xsl:for-each select="cbc:FamilyName">
-					<xsl:apply-templates/>
-					<xsl:text>&#160;</xsl:text>
-				</xsl:for-each>
-				<xsl:for-each select="cbc:NameSuffix">
-					<xsl:apply-templates/>
-				</xsl:for-each>
-				<xsl:if test="$PartyType='TAXFREE'">
-					<br/>
-					<xsl:text>Pasaport No: </xsl:text>
-					<xsl:value-of select="cac:IdentityDocumentReference/cbc:ID"/>
-					<br/>
-					<xsl:text>Ülkesi: </xsl:text>
-					<xsl:for-each select="cbc:NationalityID">
-						<xsl:call-template name="Country">
-							<xsl:with-param name="CountryType">
-								<xsl:value-of select="."/>
-							</xsl:with-param>
-						</xsl:call-template>
-					</xsl:for-each>
-				</xsl:if>
+
+			<xsl:choose>
+
+	<!-- PartyName varsa sadece bunu yazdır -->
+	<xsl:when test="cac:PartyName/cbc:Name[normalize-space()]">
+		<xsl:value-of select="cac:PartyName/cbc:Name"/>
+		<br/>
+	</xsl:when>
+
+	<!-- PartyName yoksa Person bilgilerini yazdır -->
+	<xsl:otherwise>
+		<xsl:for-each select="cac:Person">
+
+			<xsl:for-each select="cbc:Title">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
 			</xsl:for-each>
+
+			<xsl:for-each select="cbc:FirstName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:MiddleName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160; </xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:FamilyName">
+				<xsl:apply-templates/>
+				<xsl:text>&#160;</xsl:text>
+			</xsl:for-each>
+
+			<xsl:for-each select="cbc:NameSuffix">
+				<xsl:apply-templates/>
+			</xsl:for-each>
+
+			<xsl:if test="$PartyType='TAXFREE'">
+				<br/>
+				<xsl:text>Pasaport No: </xsl:text>
+				<xsl:value-of select="cac:IdentityDocumentReference/cbc:ID"/>
+				<br/>
+				<xsl:text>Ülkesi: </xsl:text>
+
+				<xsl:for-each select="cbc:NationalityID">
+					<xsl:call-template name="Country">
+						<xsl:with-param name="CountryType">
+							<xsl:value-of select="."/>
+						</xsl:with-param>
+					</xsl:call-template>
+				</xsl:for-each>
+			</xsl:if>
+
+		</xsl:for-each>
+	</xsl:otherwise>
+
+</xsl:choose>
+
+											
 		</td>
 	</xsl:template>
 	<xsl:template name="Party_Adress">

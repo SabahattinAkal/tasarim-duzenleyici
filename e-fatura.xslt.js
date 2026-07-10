@@ -221,46 +221,50 @@
 									<table align="center" border="0" width="100%">
 										<tbody>
 											<tr style="font-weight:bold;">
-												<xsl:choose>
-
-	<!-- PartyName içinde gerçekten veri varsa bunu yazdır -->
-	<xsl:when test="cac:PartyName/cbc:Name[normalize-space()]">
-		<xsl:value-of select="cac:PartyName/cbc:Name"/>
-		<br/>
-	</xsl:when>
-
-	<!-- PartyName yoksa veya boşsa Person bilgilerini yazdır -->
-	<xsl:otherwise>
-		<xsl:for-each select="cac:Person">
-
-			<xsl:for-each select="cbc:Title">
-				<xsl:apply-templates/>
-				<xsl:text>&#160;</xsl:text>
-			</xsl:for-each>
-
-			<xsl:for-each select="cbc:FirstName">
-				<xsl:apply-templates/>
-				<xsl:text>&#160;</xsl:text>
-			</xsl:for-each>
-
-			<xsl:for-each select="cbc:MiddleName">
-				<xsl:apply-templates/>
-				<xsl:text>&#160;</xsl:text>
-			</xsl:for-each>
-
-			<xsl:for-each select="cbc:FamilyName">
-				<xsl:apply-templates/>
-				<xsl:text>&#160;</xsl:text>
-			</xsl:for-each>
-
-			<xsl:for-each select="cbc:NameSuffix">
-				<xsl:apply-templates/>
-			</xsl:for-each>
-
-		</xsl:for-each>
-	</xsl:otherwise>
-
-</xsl:choose>
+												<xsl:for-each select="n1:Invoice/cac:AccountingSupplierParty/cac:Party">
+													<td>
+														<xsl:choose>
+												
+															<!-- PartyName doluysa sadece bunu yazdır -->
+															<xsl:when test="cac:PartyName/cbc:Name[normalize-space()]">
+																<xsl:value-of select="cac:PartyName/cbc:Name"/>
+																<br/>
+															</xsl:when>
+												
+															<!-- PartyName yoksa Person bilgilerini yazdır -->
+															<xsl:otherwise>
+																<xsl:for-each select="cac:Person">
+												
+																	<xsl:for-each select="cbc:Title">
+																		<xsl:apply-templates/>
+																		<xsl:text>&#160;</xsl:text>
+																	</xsl:for-each>
+												
+																	<xsl:for-each select="cbc:FirstName">
+																		<xsl:apply-templates/>
+																		<xsl:text>&#160;</xsl:text>
+																	</xsl:for-each>
+												
+																	<xsl:for-each select="cbc:MiddleName">
+																		<xsl:apply-templates/>
+																		<xsl:text>&#160;</xsl:text>
+																	</xsl:for-each>
+												
+																	<xsl:for-each select="cbc:FamilyName">
+																		<xsl:apply-templates/>
+																		<xsl:text>&#160;</xsl:text>
+																	</xsl:for-each>
+												
+																	<xsl:for-each select="cbc:NameSuffix">
+																		<xsl:apply-templates/>
+																	</xsl:for-each>
+												
+																</xsl:for-each>
+															</xsl:otherwise>
+												
+														</xsl:choose>
+													</td>
+												</xsl:for-each>
 											</tr>
 											<tr>
 												<xsl:for-each select="n1:Invoice/cac:AccountingSupplierParty/cac:Party">

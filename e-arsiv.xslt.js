@@ -228,7 +228,7 @@
 													<td>
 														<xsl:choose>
 												
-															<!-- PartyName doluysa sadece PartyName yazdır -->
+															<!-- PartyName doluysa sadece bunu yazdır -->
 															<xsl:when test="cac:PartyName/cbc:Name[normalize-space()]">
 																<xsl:value-of select="cac:PartyName/cbc:Name"/>
 																<br/>
